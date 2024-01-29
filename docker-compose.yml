@@ -9,10 +9,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: replica
-      MYSQL_LOG_BIN: mysql-bin
-      MYSQL_SERVER_ID: 1
-      MYSQL_REPLICATION_USER: replication_user
-      MYSQL_REPLICATION_PASSWORD: replication_password
+    command: --server-id=1 --log-bin=mysql-bin --binlog-do-db=replica
     networks:
       - mysql_network
 
@@ -25,20 +22,19 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: replica
       MYSQL_LOG_BIN: mysql-bin
-      MYSQL_SERVER_ID: 2
-      MYSQL_REPLICATION_USER: replication_user
-      MYSQL_REPLICATION_PASSWORD: replication_password
+    command: --server-id=2 --log-bin=mysql-bin --binlog-do-db=replica
     networks:
       - mysql_network
 
   phpmyadmin_1:
     image: phpmyadmin:latest
     container_name: phpmyadmin_1
-    ports:
+    ports: 
       - 8080:80
     environment:
       PMA_HOST: "mysql_master_1"
       PMA_ARBITRARY: 1
+      
     depends_on:
       - mysql_master_1
     networks:
@@ -52,6 +48,7 @@ services:
     environment:
       PMA_HOST: "mysql_master_2"
       PMA_ARBITRARY: 1
+     
     depends_on:
       - mysql_master_2
     networks:
