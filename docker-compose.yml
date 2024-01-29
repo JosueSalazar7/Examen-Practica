@@ -32,8 +32,9 @@ services:
     ports: 
       - 8080:80
     environment:
-      PMA_HOST: "mysql_master_1"
-      PMA_ARBITRARY: 1
+      - PMA_HOST=mysql_master1
+      - PMA_USER=root
+      - PMA_PASSWORD=root
       
     depends_on:
       - mysql_master_1
@@ -46,8 +47,9 @@ services:
     ports:
       - 8081:80
     environment:
-      PMA_HOST: "mysql_master_2"
-      PMA_ARBITRARY: 1
+      - PMA_HOST=mysql_master2
+      - PMA_USER=root
+      - PMA_PASSWORD=root
      
     depends_on:
       - mysql_master_2
